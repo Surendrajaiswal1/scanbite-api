@@ -1,0 +1,28 @@
+OTP Verification - ScanBite
+
+Hello <%= @user.full_name %>,
+
+Thank you for signing up on ScanBite! 
+
+Your one-time password (OTP) to verify your email is:
+
+<%= @otp_code %>
+
+This OTP is valid for <%= @expires_in_minutes %> minutes only.
+
+If you didn't request this OTP, please ignore this email.
+
+---
+
+Security Note:
+- Never share your OTP with anyone
+- ScanBite team will never ask for your OTP via email or phone
+- Each OTP can only be used once
+
+---
+
+Need help? Contact us at support@scanbite.com
+
+Best regards,
+The ScanBite Team
+https://scanbite.com

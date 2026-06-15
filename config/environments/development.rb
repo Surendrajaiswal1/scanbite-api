@@ -34,9 +34,57 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
+  
+  # # Configure ActionMailer for development (log to console)
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address:              ENV.fetch("SMTP_HOST", "smtp.gmail.com"),
+  #   port:                 ENV.fetch("SMTP_PORT", 587).to_i,
+  #   user_name:            ENV.fetch("SMTP_USERNAME", ""),
+  #   password:             ENV.fetch("SMTP_PASSWORD", ""),
+  #   authentication:       'plain',
+  #   enable_starttls_auto: true
+  # }
+  
+  # # Set host for email links
+  # config.action_mailer.default_url_options = {
+  #   host: "localhost:3000",
+  #   protocol: "http"
+  # }
+  
+  # # Log email delivery
+  # config.action_mailer.logger = Rails.logger
+
+    # Configure ActionMailer for development
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_caching = false
+
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:              ENV.fetch("SMTP_HOST", "smtp.gmail.com"),
+    port:                 ENV.fetch("SMTP_PORT", 587).to_i,
+    domain:               "gmail.com",
+    user_name:            ENV.fetch("SMTP_USERNAME", ""),
+    password:             ENV.fetch("SMTP_PASSWORD", ""),
+    authentication:       :plain,
+    enable_starttls_auto: ENV.fetch("SMTP_ENABLE_STARTTLS_AUTO", "true") == "true",
+    open_timeout:         5,
+    read_timeout:         5
+  }
+
+  # Run jobs inline in development
+  config.active_job.queue_adapter = :inline
+
+  # Set host for email links
+  config.action_mailer.default_url_options = {
+    host: "localhost",
+    port: 3000
+  }
+
+  config.action_mailer.logger = Rails.logger
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -52,6 +100,12 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+  config.active_record.dump_schema_after_migration = true
+
+  # Set default url options for ActiveStorage / Routes in API mode
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  routes.default_url_options = { host: "http://localhost:3000" }
+  config.active_storage.service_urls_expire_in = 1.hour
 
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true

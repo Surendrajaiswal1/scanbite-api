@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: scanbite-api
+    env: ruby
+    buildCommand: bundle install && bundle exec rake db:migrate
+    startCommand: bundle exec puma -C config/puma.rb
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_ENABLE_STARTTLS_AUTO
+        value: "true"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+    disk:
+      name: active-storage
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1

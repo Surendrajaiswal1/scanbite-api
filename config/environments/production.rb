@@ -65,10 +65,27 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "scanbite_api_production"
 
   config.action_mailer.perform_caching = false
+  
+  # Configure ActionMailer for production (SMTP)
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV.fetch("SMTP_HOST", "smtp.gmail.com"),
+    port: ENV.fetch("SMTP_PORT", 587).to_i,
+    user_name: ENV.fetch("SMTP_USERNAME", ""),
+    password: ENV.fetch("SMTP_PASSWORD", ""),
+    authentication: "plain",
+    enable_starttls_auto: ENV.fetch("SMTP_ENABLE_STARTTLS_AUTO", true)
+  }
+  
+  # Set host for email links
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch("MAIL_HOST") { "scanbite.com" },
+    protocol: "https"
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

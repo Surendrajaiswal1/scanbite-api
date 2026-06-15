@@ -2,6 +2,7 @@ services:
   - type: web
     name: scanbite-api
     env: ruby
+    plan: free
     buildCommand: bundle install && bundle exec rake db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:

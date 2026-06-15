@@ -25,7 +25,7 @@ services:
         value: "true"
       - key: GOOGLE_CLIENT_ID
         sync: false
-    disk:
-      name: active-storage
-      mountPath: /opt/render/project/src/storage
-      sizeGB: 1
+#    disk:
+#      name: active-storage
+#      mountPath: /opt/render/project/src/storage
+#      sizeGB: 1

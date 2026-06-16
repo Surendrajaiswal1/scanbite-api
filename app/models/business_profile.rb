@@ -7,12 +7,12 @@ class BusinessProfile < ApplicationRecord
   enum :business_type, { restaurant: "restaurant", cafe: "cafe", bakery: "bakery", retail: "retail", shop: "shop", other: "other" }
   
   # Validations
-  validates :shop_name, presence: true, length: { minimum: 3, maximum: 50 }
-  validates :phone_number, presence: true
-  validates :address, presence: true
+  validates :shop_name, presence: true, length: { minimum: 3, maximum: 50 }, format: { with: /[a-zA-Z]/, message: "must contain at least one letter" }
+  validates :phone_number, presence: true, format: { with: /\A\+?[\d\s\-()]{7,20}\z/, message: "must be a valid phone number" }
+  validates :address, presence: true, length: { minimum: 5, maximum: 200 }
   validates :business_type, presence: true, inclusion: { in: business_types.keys }
   validates :business_slug, presence: true, uniqueness: true
-  validates :upi_id, presence: true
+  validates :upi_id, presence: true, format: { with: /\A[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}\z/, message: "must be a valid UPI ID format (e.g., name@bank)" }
   
   # Callbacks
   before_validation :generate_business_slug, on: :create

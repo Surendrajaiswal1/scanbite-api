@@ -10,7 +10,7 @@ class User < ApplicationRecord
   enum :status, { pending: 0, email_verified: 1, active: 2 }
   
   # Validations - Identity Only
-  validates :full_name, presence: true, length: { minimum: 3, maximum: 50 }
+  validates :full_name, presence: true, length: { minimum: 3, maximum: 50 }, format: { with: /\A[a-zA-Z\s\-']+\z/, message: "must contain only letters, spaces, hyphens, or apostrophes" }
   
   validates :email, presence: true, 
             uniqueness: { case_sensitive: false },

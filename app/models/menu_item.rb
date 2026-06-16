@@ -13,8 +13,13 @@ class MenuItem < ApplicationRecord
   validate :discount_cannot_exceed_price
   
   def image_url
-    # Explicitly providing the host to avoid ArgumentError in API mode
-    Rails.application.routes.url_helpers.rails_blob_url(image, host: ENV.fetch("API_HOST", "http://localhost:3000")) if image.attached?
+    return unless image.attached?
+    
+    if image.blob.service_name == "cloudinary"
+      image.url
+    else
+      Rails.application.routes.url_helpers.rails_blob_url(image, host: ENV.fetch("API_HOST", "http://localhost:3000"))
+    end
   end
 
   before_save :calculate_final_price

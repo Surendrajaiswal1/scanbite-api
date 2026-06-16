@@ -4,7 +4,7 @@ class MenuItem < ApplicationRecord
   
   validates :name, presence: true, length: { minimum: 2, maximum: 80 }, format: { with: /[a-zA-Z]/, message: "must contain at least one letter" }
   validates :category, presence: true, length: { minimum: 2, maximum: 40 }, format: { with: /\A[a-zA-Z0-9\s&,.'-]+\z/, message: "contains invalid characters" }
-  validates :category, format: { with: /[a-zA-Z0-9]/, message: "must contain at least one letter or number" }
+  validates :category, format: { with: /[a-zA-Z]/, message: "must contain at least one letter" }
   validates :description, length: { maximum: 500 }, allow_blank: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 999999 }
   validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 99999 }, allow_nil: true

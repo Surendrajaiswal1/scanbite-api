@@ -58,3 +58,5 @@ end
 
 
 gem "aws-sdk-s3", "~> 1.225"
+
+gem "cloudinary", "~> 2.4"

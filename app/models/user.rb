@@ -11,6 +11,7 @@ class User < ApplicationRecord
   
   # Validations - Identity Only
   validates :full_name, presence: true, length: { minimum: 3, maximum: 50 }, format: { with: /\A[a-zA-Z\s\-']+\z/, message: "must contain only letters, spaces, hyphens, or apostrophes" }
+  validates :full_name, format: { with: /[a-zA-Z]/, message: "must contain at least one letter" }
   
   validates :email, presence: true, 
             uniqueness: { case_sensitive: false },

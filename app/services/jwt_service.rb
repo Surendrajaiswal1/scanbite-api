@@ -1,5 +1,5 @@
 class JwtService
-  SECRET_KEY = ENV.fetch("JWT_SECRET_KEY") { Rails.application.secrets.secret_key_base }
+  SECRET_KEY = ENV.fetch("JWT_SECRET_KEY") { Rails.application.secret_key_base || Rails.application.credentials.secret_key_base }
   
   class << self
     def encode(payload, expiration = 24.hours)
